@@ -4,6 +4,7 @@ wget https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/HGSVC2/release/
 wget http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
 
 # Find insertions due to tandem duplications
+# requires TRF (https://tandem.bu.edu/trf/trf.html) in the PATH, python, and python packages pyfaidx and ssw
 
 ./classify-INS.sh variants_freeze4_sv_insdel_alt.vcf.gz temp GRCh38_full_analysis_set_plus_decoy_hla.fa 
 rm -rf temp
