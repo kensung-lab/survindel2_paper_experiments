@@ -9,6 +9,11 @@ wget http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_refere
 ./classify-INS.sh variants_freeze4_sv_insdel_alt.vcf.gz temp GRCh38_full_analysis_set_plus_decoy_hla.fa 
 rm -rf temp
 
+# The result should have 42219 lines
+
+bcftools view variants_freeze4_sv_insdel_alt.DUP.vcf.gz -H | wc -l 
+# 42219
+
 # Separate CNVs by sample
 
 mkdir by-sample
