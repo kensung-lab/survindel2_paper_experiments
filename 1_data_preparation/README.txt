@@ -54,3 +54,5 @@ bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do
 ./2-generate-consensus-and-BAM.sh $ILLUMINA_FQ_1 $ILLUMINA_FQ_2 $HIFI_FQ hg002-DUP-HGSVC/
 ./3-filter-and-find-reads-supporting-SV.sh by-sample/NA24385.DUP.vcf.gz $ILLUMINA_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DUP-HGSVC/
 ./4-classify-SVs.sh by-sample/NA24385.DUP.vcf.gz simpleRepeat.bed hg002-DUP-HGSVC/
+
+# The classified DEL (DUP) will be inside hg002-DEL(DUP)-HGSVC/classification/
