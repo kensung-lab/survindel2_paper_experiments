@@ -21,7 +21,10 @@ bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do
 
 
 # The following will divide the calls into SR-supported, HSR-supported and without support. 
+# IMPORTANT
 # It is rather labour and computationally intense, depending on the available resources
+# For this reason, I have also included the pre-classified VCFs in the subfolder hg002-pre-classified. 
+# You can proceed to Sections 2 and without performing these steps
 
 # It requires:
 # python, along with packages scikit-learn, ssw, pysam, pyfaidx, numpy
