@@ -18,3 +18,36 @@ bcftools view variants_freeze4_sv_insdel_alt.DUP.vcf.gz -H | wc -l
 mkdir by-sample
 bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do bcftools view variants_freeze4_sv_insdel_alt.vcf.gz -i "SVTYPE=='DEL'" -s $sample --min-ac=1 -Oz -o by-sample/$sample.DEL.vcf.gz ; done
 bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do bcftools view variants_freeze4_sv_insdel_alt.DUP.vcf.gz -i "SVTYPE!='DEL'" -s $sample --min-ac=1 -Oz -o by-sample/$sample.DUP.vcf.gz ; done
+
+
+# The following will divide the calls into SR-supported, HSR-supported and without support. 
+# It is rather labour and computationally intense, depending on the available resources
+
+# It requires:
+# python, along with packages scikit-learn, ssw, pysam, pyfaidx, numpy
+# spoa (https://github.com/rvaser/spoa, version 4.0.9 was used in the study) executable on PATH
+# samtools, bwa (0.7.17-r1188 was used in the study) and minimap2 (2.24 was used in the stusy) on PATH
+
+# We will need 4 things:
+# 1: raw HiFi reads in fq format (path stored in HIFI_FQ)
+# For the study, we used the following accessions
+#SRR10382244
+#SRR10382245
+#SRR10382246
+#SRR10382247
+#SRR10382248
+#SRR10382249
+# 2: same reads, mapped to hg38 with minimap2, producing a sorted and indexed (samtools sort and index) BAM file (HIFI_BAM)
+# 3: raw Illumina paired reads (we used reads with accession SRR1766442 to SRR1766486). Stored in $ILLUMINA_FQ_1 and $ILLUMINA_FQ_2
+# 4: same reads, mapped to hg38 with bwa mem, sorted and indexed (ILLUMINA_BAM)
+
+./1-extract-reads.sh by-sample/NA24385.DEL.vcf.gz $HIFI_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DEL-HGSVC
+./2-generate-consensus-and-BAM.sh $ILLUMINA_FQ_1 $ILLUMINA_FQ_2 $HIFI_FQ hg002-DEL-HGSVC/
+./3-filter-and-find-reads-supporting-SV.sh by-sample/NA24385.DEL.vcf.gz $ILLUMINA_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DEL-HGSVC/
+./4-classify-SVs.sh by-sample/NA24385.DEL.vcf.gz simpleRepeat.bed hg002-DEL-HGSVC/
+
+# this step may print an error for a couple of duplications, it is fine
+./1-extract-reads.sh by-sample/NA24385.DUP.vcf.gz $HIFI_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DUP-HGSVC
+./2-generate-consensus-and-BAM.sh $ILLUMINA_FQ_1 $ILLUMINA_FQ_2 $HIFI_FQ hg002-DUP-HGSVC/
+./3-filter-and-find-reads-supporting-SV.sh by-sample/NA24385.DUP.vcf.gz $ILLUMINA_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DUP-HGSVC/
+./4-classify-SVs.sh by-sample/NA24385.DUP.vcf.gz simpleRepeat.bed hg002-DUP-HGSVC/
