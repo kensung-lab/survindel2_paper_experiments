@@ -71,26 +71,28 @@ cat ../1_data_preparation/hg002-pre-classified/DEL/supporting_reads.strong_hsr .
 # It will take a while (a few hours) and requires the ILLUMINA_BAM file. I placed the file generated and used in our study in hsr_generated_indels-pre-computed/
 # Note that since it uses random sampling, the set of CNVs you will obtain may be different from what was used to generate fig 2f
 # If you decide to use the pre-computed file, you can skip the following two commands
-mkdir hsr_generated_indels/
-python3 calc-chance-of-false-HSR.py $ILLUMINA_BAM ../1_data_preparation/simpleRepeat.txt ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa hsr_generated_indels/
+mkdir -p hsr_generated_indels/hg002
+python3 calc-chance-of-false-HSR.py $ILLUMINA_BAM ../1_data_preparation/simpleRepeat.txt ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa hsr_generated_indels/hg002/
 
-cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9<10' > hsr_generated_indels-pre-computed/hsr_generated_indels.0to10.sv
-cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=10 && $9<20' > hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv
-cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=20 && $9<40' > hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv
-cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=40' > hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv
+cat hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.sv | awk '$9<10' > hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.0to10.sv
+cat hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.sv | awk '$9>=10 && $9<20' > hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.10to20.sv
+cat hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.sv | awk '$9>=20 && $9<40' > hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.20to40.sv
+cat hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.sv | awk '$9>=40' > hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.40+.sv
 
 # HSR-score 0-9: 585/8297 deletions TPs and 422/5235 duplications TPs = 1007/13532 TP CNVs
-../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
-../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
 
 # HSR-score 10-19: 299/3247 deletions TPs and 299/2659 duplications TPs = 598/5906 TP CNVs
-../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
-../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
 
 # HSR-score 20-39: 128/802 deletions TPs and 105/935 duplications TPs = 133/1737 TP CNVs
-../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
-../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
 
 # HSR-score 40+: 14/68 deletions TPs and 1/62 duplications TPs = 15/130 TP CNVs
-../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
-../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hg002/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+
+# These instructions focus on Fig 2 (i.e., HG002/NA24385). It is easy to adapt them to use HG00512 instead to produce Fig. S6.
