@@ -18,6 +18,7 @@ bcftools view variants_freeze4_sv_insdel_alt.DUP.vcf.gz -H | wc -l
 mkdir by-sample
 bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do bcftools view variants_freeze4_sv_insdel_alt.vcf.gz -i "SVTYPE=='DEL'" -s $sample --min-ac=1 -Oz -o by-sample/$sample.DEL.vcf.gz ; done
 bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do bcftools view variants_freeze4_sv_insdel_alt.DUP.vcf.gz -i "SVTYPE!='DEL'" -s $sample --min-ac=1 -Oz -o by-sample/$sample.DUP.vcf.gz ; done
+bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do bcftools view variants_freeze4_sv_insdel_alt.vcf.gz -i "SVTYPE!='DEL'" -s $sample --min-ac=1 -Oz -o by-sample/$sample.INS.vcf.gz ; done
 
 
 # The following will divide the calls into SR-supported, HSR-supported and without support. 
