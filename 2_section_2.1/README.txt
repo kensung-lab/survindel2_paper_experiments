@@ -78,3 +78,19 @@ cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9<10' > hs
 cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=10 && $9<20' > hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv
 cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=20 && $9<40' > hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv
 cat hsr_generated_indels-pre-computed/hsr_generated_indels.sv | awk '$9>=40' > hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv
+
+# HSR-score 0-9: 585/8297 deletions TPs and 422/5235 duplications TPs = 1007/13532 TP CNVs
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.0to10.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+
+# HSR-score 10-19: 299/3247 deletions TPs and 299/2659 duplications TPs = 598/5906 TP CNVs
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.10to20.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+
+# HSR-score 20-39: 128/802 deletions TPs and 105/935 duplications TPs = 133/1737 TP CNVs
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.20to40.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
+
+# HSR-score 40+: 14/68 deletions TPs and 1/62 duplications TPs = 15/130 TP CNVs
+../SurVClusterer/compare-del ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed --report | grep PREC
+../SurVClusterer/compare-ins ../1_data_preparation/by-sample/NA24385.INS.vcf.gz hsr_generated_indels-pre-computed/hsr_generated_indels.40+.sv -T ../1_data_preparation/simpleRepeat.bed -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --report | grep PREC
