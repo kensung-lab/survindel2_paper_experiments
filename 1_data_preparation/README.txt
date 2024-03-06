@@ -2,6 +2,9 @@
 wget https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/HGSVC2/release/v2.0/integrated_callset/variants_freeze4_sv_insdel_alt.vcf.gz
 wget http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/GRCh38_reference_genome/GRCh38_full_analysis_set_plus_decoy_hla.fa
 
+# Unzip Arabidopsis reference
+gunzip -c TAIR10_chr_all.fa.gz > TAIR10_chr_all.fa
+
 # simpleRepeat.txt was downloaded from the UCSC table browser. We convert it to the BED format since some processes need it
 cat simpleRepeat.txt | grep -v "#" | cut -f2,3,4,6,17 | sort -k1,1 -k2,2n > simpleRepeat.bed 
 
