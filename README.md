@@ -10,4 +10,4 @@ cmake -DCMAKE_BUILD_TYPE=Release . && make
 
 Then, follow the instructions in 1_data_preparation/README.txt, since they are required to generate figures from all sections.
 
-
+After that, you can follow the README in whichever figure you are interested in replicating.
