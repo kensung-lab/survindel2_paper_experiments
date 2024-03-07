@@ -14,9 +14,32 @@ for f in deepvariant-INS-30-to-50bp/*.vcf.gz ; do bcftools concat -a $f survinde
 # we generate a more comprehensive benchmark to better estimate precision for two samples: HG00512 and HG002
 # we did so by using deepvariant and sniffles2 on HiFi reads, and merging the three VCFs (the benchmark, sniffles2 and deepvariant)
 
-# find recall for deletions of survindel2, deepvariant and survindel2+deepvariant
+# find recall for deletions of deepvariant and survindel2+deepvariant
 for sample in HG00096 HG00171 HG00512 HG00513 HG00514 HG00731 HG00732 HG00733 HG00864 HG01114 HG01505 HG01596 HG02011 HG02492 HG02587 HG02818 HG03009 HG03065 HG03125 HG03371 HG03486 HG03683 HG03732 NA12329 NA12878 NA18534 NA18939 NA19238 NA19239 NA19240 NA19650 NA19983 NA20509 NA20847 HG002-GRCh38 ; do 
     echo $sample
     echo deepvariant `../SurVClusterer/compare-del benchmark-DEL-30-to-50bp/$sample.vcf.gz deepvariant-DEL-30-to-50bp/$sample.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report | grep RECALL`
-    echo combined `~/SurVClusterer/compare-del benchmark-DEL-30-to-50bp/$sample.vcf.gz deepvariant-survindel2-DEL-30-to-50bp/$sample.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report | grep RECALL`
+    echo combined `../SurVClusterer/compare-del benchmark-DEL-30-to-50bp/$sample.vcf.gz deepvariant-survindel2-DEL-30-to-50bp/$sample.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report | grep RECALL`
 done > recall.DEL.txt 2> /dev/null
+
+# find precision for deletions in HG00512
+../SurVClusterer/compare-del benchmark-plus-hifi-deepvariant-sniffles/HG00512.vcf.gz deepvariant-DEL-30-to-50bp/HG00512.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+../SurVClusterer/compare-del benchmark-plus-hifi-deepvariant-sniffles/HG00512.vcf.gz deepvariant-survindel2-DEL-30-to-50bp/HG00512.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+
+# find precision for deletions in HG002
+../SurVClusterer/compare-del benchmark-plus-hifi-deepvariant-sniffles/HG002-GRCh38.vcf.gz deepvariant-DEL-30-to-50bp/HG002-GRCh38.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+../SurVClusterer/compare-del benchmark-plus-hifi-deepvariant-sniffles/HG002-GRCh38.vcf.gz deepvariant-survindel2-DEL-30-to-50bp/HG002-GRCh38.vcf.gz -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+
+# find recall for insertions of deepvariant and survindel2+deepvariant
+for sample in HG00096 HG00171 HG00512 HG00513 HG00514 HG00731 HG00732 HG00733 HG00864 HG01114 HG01505 HG01596 HG02011 HG02492 HG02587 HG02818 HG03009 HG03065 HG03125 HG03371 HG03486 HG03683 HG03732 NA12329 NA12878 NA18534 NA18939 NA19238 NA19239 NA19240 NA19650 NA19983 NA20509 NA20847 HG002-GRCh38 ; do 
+    echo $sample
+    echo deepvariant `../SurVClusterer/compare-ins benchmark-INS-30-to-50bp/$sample.vcf.gz deepvariant-INS-30-to-50bp/$sample.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report | grep RECALL`
+    echo combined `../SurVClusterer/compare-ins benchmark-INS-30-to-50bp/$sample.vcf.gz deepvariant-survindel2-INS-30-to-50bp/$sample.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report | grep RECALL`
+done > recall.INS.txt 2> /dev/null
+
+# find precision for insertions in HG00512
+../SurVClusterer/compare-ins benchmark-plus-hifi-deepvariant-sniffles/HG00512.vcf.gz deepvariant-INS-30-to-50bp/HG00512.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+../SurVClusterer/compare-ins benchmark-plus-hifi-deepvariant-sniffles/HG00512.vcf.gz deepvariant-survindel2-INS-30-to-50bp/HG00512.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+
+# find precision for insertions in HG002
+../SurVClusterer/compare-ins benchmark-plus-hifi-deepvariant-sniffles/HG002-GRCh38.vcf.gz deepvariant-INS-30-to-50bp/HG002-GRCh38.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
+../SurVClusterer/compare-ins benchmark-plus-hifi-deepvariant-sniffles/HG002-GRCh38.vcf.gz deepvariant-survindel2-INS-30-to-50bp/HG002-GRCh38.vcf.gz -R ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -T ../1_data_preparation/simpleRepeat.bed --report 2> /dev/null | grep PREC
