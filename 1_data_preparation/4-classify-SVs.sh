@@ -1,6 +1,7 @@
 VCF=$1
 TRF_BED=$2
 OUTDIR=$3
+READLEN=$4
 
 rm -rf $OUTDIR/classification/
 mkdir $OUTDIR/classification/
@@ -34,3 +35,5 @@ cat $OUTDIR/ref_vs_ref_w_sv/ref.qnames | grep -v -w -f $OUTDIR/classification/st
 ~/bin/filter-vcf-by-ids.sh $VCF $OUTDIR/classification/no_support $OUTDIR/classification/no_support.ids
 bedtools intersect -a $OUTDIR/classification/no_support.vcf.gz -b $OUTDIR/classification/trf-ext.bed -u -f 0.9 -header | bcftools view -Oz -o $OUTDIR/classification/no_support.inTR.vcf.gz
 bedtools intersect -a $OUTDIR/classification/no_support.vcf.gz -b $OUTDIR/classification/trf-ext.bed -v -f 0.9 -header | bcftools view -Oz -o $OUTDIR/classification/no_support.noTR.vcf.gz
+
+python3 study-reasons-for-low-support.py $OUTDIR/alt_alleles_fa/alt.good_pairs.bam $OUTDIR/alt_allele_verification/alt-bp-coords.txt $OUTDIR/alt_alleles_fa/alt.fa $OUTDIR/ref_vs_ref_w_sv/ref.fa $OUTDIR/ref_vs_ref_w_sv/ref_w_sv.fa $READLEN > $OUTDIR/classification/expected_support.txt

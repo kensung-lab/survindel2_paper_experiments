@@ -51,12 +51,13 @@ bcftools query -l variants_freeze4_sv_insdel_alt.vcf.gz | while read sample ; do
 ./1-extract-reads.sh by-sample/NA24385.DEL.vcf.gz $HIFI_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DEL-HGSVC
 ./2-generate-consensus-and-BAM.sh $ILLUMINA_FQ_1 $ILLUMINA_FQ_2 $HIFI_FQ hg002-DEL-HGSVC/
 ./3-filter-and-find-reads-supporting-SV.sh by-sample/NA24385.DEL.vcf.gz $ILLUMINA_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DEL-HGSVC/
-./4-classify-SVs.sh by-sample/NA24385.DEL.vcf.gz simpleRepeat.bed hg002-DEL-HGSVC/
+./4-classify-SVs.sh by-sample/NA24385.DEL.vcf.gz simpleRepeat.bed hg002-DEL-HGSVC/ 148
+# 148 is the length of the Illumina reads
 
 # this step may print an error for a couple of duplications, it is fine
 ./1-extract-reads.sh by-sample/NA24385.DUP.vcf.gz $HIFI_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DUP-HGSVC
 ./2-generate-consensus-and-BAM.sh $ILLUMINA_FQ_1 $ILLUMINA_FQ_2 $HIFI_FQ hg002-DUP-HGSVC/
 ./3-filter-and-find-reads-supporting-SV.sh by-sample/NA24385.DUP.vcf.gz $ILLUMINA_BAM GRCh38_full_analysis_set_plus_decoy_hla.fa hg002-DUP-HGSVC/
-./4-classify-SVs.sh by-sample/NA24385.DUP.vcf.gz simpleRepeat.bed hg002-DUP-HGSVC/
+./4-classify-SVs.sh by-sample/NA24385.DUP.vcf.gz simpleRepeat.bed hg002-DUP-HGSVC/ 148
 
 # The classified DEL (DUP) will be inside hg002-DEL(DUP)-HGSVC/classification/
