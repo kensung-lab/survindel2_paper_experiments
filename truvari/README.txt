@@ -42,8 +42,8 @@ tabix -p vcf ../1_data_preparation/by-sample/NA24385.DUP.vcf.gz
 tabix -p vcf ../1_data_preparation/by-sample/NA24385.INS.vcf.gz
 rm -rf manta-DUP-recall-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.DUP.vcf.gz -c ../callers-results/NA24385/manta.DUP+INS.vcf.gz -f ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -o manta-DUP-recall-HG002/ --multimatch --pctsim 0 --pctsize 0 --dup-to-ins --sizemax 200000000
 rm -rf manta-DUP-precision-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.INS.vcf.gz -c ../callers-results/NA24385/manta.DUP.vcf.gz -f ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -o manta-DUP-precision-HG002/ --multimatch --pctsim 0 --pctsize 0 --dup-to-ins --sizemax 200000000
-echo Manta recall `grep recall manta-DUP-recall-HG002/summary.txt | awk '{print int($2*100)/100}'`
-echo Manta precision `grep prec manta-DUP-precision-HG002/summary.txt | awk '{print int($2*100)/100}'`
+echo Manta recall `grep recall manta-DUP-recall-HG002/summary.txt | awk '{printf "%.2f",$2}'`
+echo Manta precision `grep prec manta-DUP-precision-HG002/summary.txt | awk '{printf "%.2f",$2}'`
 rm -rf survindel2-DUP-recall-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.DUP.vcf.gz -c ../callers-results/NA24385/survindel2.DUP.vcf.gz -f ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -o survindel2-DUP-recall-HG002/ --multimatch --pctsim 0 --pctsize 0 --dup-to-ins --sizemax 200000000
 rm -rf survindel2-DUP-precision-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.INS.vcf.gz -c ../callers-results/NA24385/survindel2.DUP.vcf.gz -f ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -o survindel2-DUP-precision-HG002/ --multimatch --pctsim 0 --pctsize 0 --dup-to-ins --sizemax 200000000
 echo SurVIndel2 recall `grep recall survindel2-DUP-recall-HG002/summary.txt | awk '{printf "%.2f",$2}'`
