@@ -12,8 +12,8 @@ tabix -p vcf HG002.survindel2.ml.DEL.alt.vcf.gz
 # Compare HG00512 deletions for Manta and SurVIndel2
 tabix -p vcf ../1_data_preparation/by-sample/HG00512.DEL.vcf.gz
 rm -rf manta-DEL-HG00512/ ; truvari bench -b ../1_data_preparation/by-sample/HG00512.DEL.vcf.gz -c ../callers-results/HG00512/manta.DEL.vcf.gz -f ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa -o manta-DEL-HG00512/ --multimatch --sizemax 200000000
-echo Manta recall `grep recall manta-DEL-HG00512/summary.txt | awk awk '{printf "%.2f",$2}'`
-echo Manta precision `grep prec manta-DEL-HG00512/summary.txt | awk awk '{printf "%.2f",$2}'`
+echo Manta recall `grep recall manta-DEL-HG00512/summary.txt | awk '{printf "%.2f",$2}'`
+echo Manta precision `grep prec manta-DEL-HG00512/summary.txt | awk '{printf "%.2f",$2}'`
 rm -rf survindel2-DEL-HG00512/ ; truvari bench -b ../1_data_preparation/by-sample/HG00512.DEL.vcf.gz -c HG00512.survindel2.ml.DEL.alt.vcf.gz -o survindel2-DEL-HG00512/ --reference ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --multimatch --sizemax 200000000
 echo SurVIndel2 recall `grep recall survindel2-DEL-HG00512/summary.txt | awk '{printf "%.2f",$2}'`
 echo SurVIndel2 precision `grep prec survindel2-DEL-HG00512/summary.txt | awk '{printf "%.2f",$2}'`
@@ -21,11 +21,11 @@ echo SurVIndel2 precision `grep prec survindel2-DEL-HG00512/summary.txt | awk '{
 # Compare HG002 deletions for Manta and SurVIndel2
 tabix -p vcf  ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz
 rm -rf manta-DEL-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz -c ../callers-results/NA24385/manta.DEL.vcf.gz -o manta-DEL-HG002/ --reference ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --multimatch --sizemax 200000000
-echo Manta recall `grep recall manta-DEL-HG002/summary.txt | awk awk '{printf "%.2f",$2}'`
-echo Manta precision `grep prec manta-DEL-HG002/summary.txt | awk awk '{printf "%.2f",$2}'`
+echo Manta recall `grep recall manta-DEL-HG002/summary.txt | awk '{printf "%.2f",$2}'`
+echo Manta precision `grep prec manta-DEL-HG002/summary.txt | awk '{printf "%.2f",$2}'`
 rm -rf survindel2-DEL-HG002/ ; truvari bench -b ../1_data_preparation/by-sample/NA24385.DEL.vcf.gz -c HG002.survindel2.ml.DEL.alt.vcf.gz -o survindel2-DEL-HG002/ --reference ../1_data_preparation/GRCh38_full_analysis_set_plus_decoy_hla.fa --multimatch --sizemax 200000000
 echo SurVIndel2 recall `grep recall survindel2-DEL-HG002/summary.txt | awk '{printf "%.2f",$2}'`
-echo SurVIndel2 precision `grep prec survindel2-DEL-HG002/summary.txt | awk awk '{printf "%.2f",$2}'`
+echo SurVIndel2 precision `grep prec survindel2-DEL-HG002/summary.txt | awk '{printf "%.2f",$2}'`
 
 tabix -p vcf ../1_data_preparation/by-sample/HG00512.DUP.vcf.gz
 tabix -p vcf ../1_data_preparation/by-sample/HG00512.INS.vcf.gz
