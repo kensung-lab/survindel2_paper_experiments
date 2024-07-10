@@ -13,6 +13,8 @@ def update_vcf_with_ref_alt(vcf_path, ref_fasta_path, output_vcf_path):
 
         ref_seq = ref_fasta.fetch(chrom, start - 1, end)
         alt_seq = ref_seq[0]
+        if 'SVINSSEQ' in record.info:
+            alt_seq += record.info['SVINSSEQ']
 
         record.ref = ref_seq
         record.alts = (alt_seq,)
